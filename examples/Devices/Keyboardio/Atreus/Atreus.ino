@@ -18,7 +18,7 @@
  */
 
 #ifndef BUILD_INFORMATION
-#define BUILD_INFORMATION "locally built"
+#define BUILD_INFORMATION "built by domenzain"
 #endif
 
 #include "Kaleidoscope.h"
@@ -37,7 +37,7 @@
 #define TG(n) LockLayer(n)
 
 enum {
-  MACRO_QWERTY,
+  MACRO_BASE,
   MACRO_VERSION_INFO
 };
 
@@ -52,23 +52,23 @@ enum {
 #define Key_Plus LSHIFT(Key_Equals)
 
 enum {
-  QWERTY,
+  BASE,
   FUN,
   UPPER
 };
 
 /* *INDENT-OFF* */
 KEYMAPS(
-  [QWERTY] = KEYMAP_STACKED
+  [BASE] = KEYMAP_STACKED
   (
-       Key_Q   ,Key_W   ,Key_E       ,Key_R         ,Key_T
-      ,Key_A   ,Key_S   ,Key_D       ,Key_F         ,Key_G
-      ,Key_Z   ,Key_X   ,Key_C       ,Key_V         ,Key_B, Key_Backtick
-      ,Key_Esc ,Key_Tab ,Key_LeftGui ,Key_LeftShift ,Key_Backspace ,Key_LeftControl
+       Key_Q   ,Key_G   ,Key_M       ,Key_L         ,Key_W
+      ,Key_D   ,Key_S   ,Key_T       ,Key_N         ,Key_R
+      ,Key_Z   ,Key_X   ,Key_C       ,Key_V         ,Key_J         ,Key_Tab
+      ,MO(FUN) ,Key_Tab ,Key_LeftGui ,Key_LeftShift ,Key_Backspace ,Key_Escape
 
-                     ,Key_Y     ,Key_U      ,Key_I     ,Key_O      ,Key_P
-                     ,Key_H     ,Key_J      ,Key_K     ,Key_L      ,Key_Semicolon
-       ,Key_Backslash,Key_N     ,Key_M      ,Key_Comma ,Key_Period ,Key_Slash
+                     ,Key_Y     ,Key_F      ,Key_U     ,Key_B      ,Key_Semicolon
+                     ,Key_I     ,Key_A      ,Key_E     ,Key_O      ,Key_H
+       ,Key_Enter    ,Key_K     ,Key_P      ,Key_Comma ,Key_Period ,Key_Slash
        ,Key_LeftAlt  ,Key_Space ,MO(FUN)    ,Key_Minus ,Key_Quote  ,Key_Enter
   ),
 
@@ -79,10 +79,10 @@ KEYMAPS(
       ,Key_LeftBracket ,Key_RightBracket ,Key_Hash      ,Key_LeftCurlyBracket ,Key_RightCurlyBracket ,Key_Caret
       ,TG(UPPER)       ,Key_Insert       ,Key_LeftGui   ,Key_LeftShift        ,Key_Delete         ,Key_LeftControl
 
-                   ,Key_PageUp   ,Key_7 ,Key_8      ,Key_9 ,Key_Backspace
-                   ,Key_PageDown ,Key_4 ,Key_5      ,Key_6 ,___
-      ,Key_And     ,Key_Star     ,Key_1 ,Key_2      ,Key_3 ,Key_Plus
-      ,Key_LeftAlt ,Key_Space    ,___   ,Key_Period ,Key_0 ,Key_Equals
+                     ,Key_PageUp    ,Key_7       ,Key_8          ,Key_9 ,Key_Backspace
+      ,Key_LeftArrow ,Key_DownArrow ,Key_UpArrow ,Key_RightArrow ,___
+      ,Key_And       ,Key_Star      ,Key_1       ,Key_2          ,Key_3 ,Key_Plus
+      ,Key_LeftAlt   ,Key_Space     ,___         ,Key_Period     ,Key_0 ,Key_Equals
    ),
 
   [UPPER] = KEYMAP_STACKED
@@ -90,12 +90,12 @@ KEYMAPS(
        Key_Insert            ,Key_Home                 ,Key_UpArrow   ,Key_End        ,Key_PageUp
       ,Key_Delete            ,Key_LeftArrow            ,Key_DownArrow ,Key_RightArrow ,Key_PageDown
       ,M(MACRO_VERSION_INFO) ,Consumer_VolumeIncrement ,XXX           ,XXX            ,___ ,___
-      ,MoveToLayer(QWERTY)   ,Consumer_VolumeDecrement ,___           ,___            ,___ ,___
+      ,MoveToLayer(BASE)   ,Consumer_VolumeDecrement ,___           ,___            ,___ ,___
 
                 ,Key_UpArrow   ,Key_F7              ,Key_F8          ,Key_F9         ,Key_F10
                 ,Key_DownArrow ,Key_F4              ,Key_F5          ,Key_F6         ,Key_F11
       ,___      ,XXX           ,Key_F1              ,Key_F2          ,Key_F3         ,Key_F12
-      ,___      ,___           ,MoveToLayer(QWERTY) ,Key_PrintScreen ,Key_ScrollLock ,Consumer_PlaySlashPause
+      ,___      ,___           ,MoveToLayer(BASE) ,Key_PrintScreen ,Key_ScrollLock ,Consumer_PlaySlashPause
    )
 )
 /* *INDENT-ON* */
@@ -115,12 +115,12 @@ KALEIDOSCOPE_INIT_PLUGINS(
 
 const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   switch (macroIndex) {
-  case MACRO_QWERTY:
+  case MACRO_BASE:
     // This macro is currently unused, but is kept around for compatibility
-    // reasons. We used to use it in place of `MoveToLayer(QWERTY)`, but no
+    // reasons. We used to use it in place of `MoveToLayer(BASE)`, but no
     // longer do. We keep it so that if someone still has the old layout with
     // the macro in EEPROM, it will keep working after a firmware update.
-    Layer.move(QWERTY);
+    Layer.move(BASE);
     break;
   case MACRO_VERSION_INFO:
     if (keyToggledOn(keyState)) {
